@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Picture } from '@components';
 import classes from "./DragDrop.module.css";
+import { useDrop } from 'react-dnd';
 
 interface IPicture {
     id: number;
@@ -23,14 +24,43 @@ const PictureList: IPicture[] = [
 ];
 
 function DragDrop(){
+    const [board, setBoard] = useState([]);
+
+    const [{ isOver }, drop] = useDrop(() => ({
+        accept: 'picture',
+        drop: (item: any) => addImageToBoard(item.id),
+        collect: (monitor) => ({
+            isOver: !!monitor.isOver(),
+        }),
+    }));
+
+    const addImageToBoard = (id: number) => {
+        const pictureList = PictureList.find((picture) => picture.id === id);
+        setBoard(prevState => {
+            console.log(prevState);
+            if (prevState.length === 3) {
+                prevState.shift();
+            }
+            return [...prevState, pictureList]
+        });
+    } 
 
     return (
-        <>
-            <div className={classes.Pictures}>{PictureList.map(picture => (
-                <Picture id={picture.id} src={picture.src} />
-            ))}</div>
-            <div className={classes.Board}></div>
-        </>
+      <>
+        <div className={classes.Pictures}>
+          {PictureList.map((picture) => (
+            <Picture id={picture.id} src={picture.src} />
+          ))}
+        </div>
+        <div ref={drop} className={classes.Board}>
+          {board.map((picture) => (
+            <img
+              src={picture.src}
+              width={150}
+            />
+          ))}
+        </div>
+      </>
     );
 }
 
