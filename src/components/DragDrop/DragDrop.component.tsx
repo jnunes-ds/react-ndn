@@ -14,7 +14,7 @@ const PictureList: IPicture[] = [
   },
   {
     id: 2,
-    src: "https://blog.geekhunter.com.br/wp-content/uploads/2021/02/1_mp91A9RzagntGGjBnwu4Yw.png",
+    src: "https://www.elluminatiinc.com/wp-content/uploads/2020/07/blog/nodejsframeworks.png",
   },
   {
     id: 3,
