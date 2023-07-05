@@ -1,11 +1,11 @@
 import React from 'react';
-
+import { DragDrop } from '@components';
 
 function Home(){
 
     return (
         <div>
-            Hello-world
+            <DragDrop />
         </div>
     );
 }
